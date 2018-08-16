@@ -1,0 +1,48 @@
+<view>
+    <view class="top">
+        <view>行走的力量</view>
+        <view>运动和热情燃烧你的能量</view>
+    </view>
+    <view class="banner">
+        <view>已累计<text class="allstep">{{allstep}}</text>步</view>
+        <view>不要羡慕我，我只是腿长</view>
+        <navigator url="/page/navigate/navigate?title=navigate" class="navigator-exchange"></navigator>
+    </view>
+    <view class="userinfobox">
+        <view class="userheader"><open-data type="userAvatarUrl"></open-data></view>
+        <view class="userheadertxt">Hi,<open-data class="userinfo-nickname" type="userNickName"></open-data> !</view>
+        <navigator url="/pages/test/test" class="navigator-guize">活动规则></navigator>
+    </view>
+    <view class="circleBar">
+        <view class="circleBarbody">
+            <canvas class="cir" style=' width:120px; height:120px;' canvas-id="canvasArc"></canvas>
+            <view class="centerWord"><text>今日步数</text><text class="step">{{allstep}}</text></view>
+        </view>
+        <button class="navigator-share" bindtap="showshare"></button>
+    </view>
+    <view class="userstep-list">
+
+        <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
+          <image src="{{item.userheader}}" class="userstep-header"></image>
+          <view class="userstep-name">{{item.username}}</view>
+          <view class="userstep-num">为你助力{{item.userstep}}步</view>
+        </view>
+    </view>
+    <view class="userOrderList">
+        <view class="userOrderList-title">排行榜</view>
+        <view class="userOrderListbody">
+            <view wx:for="{{userOrderList}}" wx:key="username" class="userOrderList-col">
+                      <image src="{{item.userheader}}" class="userOrderList-header"></image>
+                      <view class="userOrderList-name">{{item.username}}</view>
+                      <view class="userOrderList-num">{{item.userstep}}步</view>
+                      <progress class="userOrderList-progress" percent="{{item.userprogress}}" active />
+                    </view>
+        </view>
+    </view>
+
+</view>
+<view class="maskbox {{maskboxshow}}" bindtap="hideshare"></view>
+<view class="sharebox" animation="{{animationData}}">
+        <view class="sharebox-1"><button open-type="share" class="share-1"></button><text>分享给好友</text></view>
+        <view class="sharebox-2"><image src="https://www.zhenzhezixun.com/images/share-ico-2.png"></image><text>分享到朋友圈</text></view>
+    </view>
