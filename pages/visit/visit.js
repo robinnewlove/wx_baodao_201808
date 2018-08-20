@@ -14,61 +14,20 @@ Page({
         animationData: {},
         maskboxshow:""
     },
-    onLoad: function () {
-
-        wx.canIUse('wx.showShareMenu');
+    onLoad: function (e) {
 
         let that = this;
-        wx.login({
-              success: function (res) {
-                if (res.code) {
-                  //发起网络请求
-                  wx.request({
-                    url: 'https://werun.renlai.fun/wechat/wx/user_login',
-                    data: {
-                      code: res.code
-                    },
-                    method:"GET",
-                    success:function (res){
-                        console.log(res.data.openid);
-                        console.log(res.data.session_key);
-                        var sessionId = res.data.session_key;
-                        that.setData({
-                            sessionId: sessionId,
-                            openId: res.data.openid
-                        });
-                        wx.setStorageSync('sessionId', sessionId);
-                      //console.log(res.data)
-                        //获取微信步数代码
-                        wx.getWeRunData({
-                            success(res) {
-                                console.log(res);
-                                that.setData({
-                                    encryptedData: res.encryptedData,
-                                    iv:res.iv,
-                                    session: wx.getStorageSync('sessionId')
-                                });
-                                that.decodeUserInfo();
-                            }
-                        })
 
-                        //获取朋友
-                        that.getFriendList();
-
-                        //获取排行榜
-                        that.getUserOrderList()
-                    }
-                  })
-                } else {
-                  console.log('登录失败！' + res.errMsg)
-                }
-              }
-        }),
-
-        wx.showShareMenu({
-            withShareTicket: true
+        that.setData({
+            openId: e.openId,
         });
 
+
+
+
+        that.getFriendList();
+
+        that.postFriendStep();
     },
     decodeUserInfo: function () {
         let that = this;
@@ -186,113 +145,47 @@ Page({
 
     },
 
-    //获取用户排行
-    getUserOrderList: function () {
+    getFriendAll:function () {
         let that = this;
 
         wx.request({
-            url: 'https://werun.renlai.fun/wechat/wx/get_werun_list',
+            url: 'https://werun.renlai.fun/wechat/wx/post_help_werun',
             data: {
-                //openId: that.data.openId
+                openId: that.data.openId
             },
             method: 'GET',
             success: function (res) {
                 //console.log(res.data)
+                that.setData({
+                    friendlist: res.data,
+                });
 
-                if(res.data.errcode == "0"){
-                    that.setData({
-                        userOrderList: res.data.userlist,
-                    });
-                }
-                else{
-                    console.log("排行榜数据异常")
-                }
+            }
+        })
+
+    },
+    //助力
+
+    postFriendStep:function () {
+        let that = this;
+
+        wx.request({
+            url: 'https://werun.renlai.fun/wechat/wx/post_help_werun',
+            data: {
+                openId: that.data.openId
+            },
+            method: 'GET',
+            success: function (res) {
+                //console.log(res.data)
+                that.setData({
+                    friendlist: res.data,
+                });
+
             }
         })
 
     },
 
-    //显示分享层
-    showshare:function(){
-
-
-        var animation = wx.createAnimation({
-            duration: 500,
-            timingFunction: 'ease',
-        })
-
-        this.animation = animation
-
-        animation.bottom(0).step();
-
-        this.setData({
-            animationData:animation.export(),
-            maskboxshow:"show"
-
-        })
-    },
-    //隐藏分享层
-    hideshare:function(){
-
-
-        var animation = wx.createAnimation({
-            duration: 500,
-            timingFunction: 'ease',
-        })
-
-        this.animation = animation
-
-        animation.bottom("-450rpx").step();
-
-        this.setData({
-            animationData:animation.export(),
-            maskboxshow:""
-
-        })
-    },
-
     //分享
 
-
-    onShareAppMessage: function (res) {
-        if (res.from === 'button') {
-            // 来自页面内转发按钮
-            //console.log(res.target)
-        }
-        return {
-            title: '快来帮我凑步数',
-            path: '/pages/visit/visit',
-            imageUrl:'https://www.zhenzhezixun.com/images/share.jpg'
-            // success: function (res) {
-            //     // 转发成功
-            //     console.log('123');
-            //     var shareTickets = res.shareTickets;
-            //     var shareTicket = shareTickets;
-            //     // wx.getShareInfo({
-            //     //     shareTicket: shareTicket,
-            //     //     success: function (res) {
-            //     //         console.log('success');
-            //     //         console.log(res);
-            //     //         //console.log(res);
-            //     //         wx.showToast({
-            //     //             title: '转发成功',
-            //     //             duration: 5000
-            //     //         })
-            //     //     },
-            //     //     fail: function (res) {
-            //     //         console.log('fail');
-            //     //         console.log(res);
-            //     //         wx.showToast({
-            //     //             title: 'fail:' + res.errMsg,
-            //     //             duration: 5000
-            //     //         })
-            //     //     }
-            //     // });
-            // },
-            // fail: function (res) {
-            //     // 转发失败
-            // }
-
-        }
-    }
 })

@@ -1,0 +1,10 @@
+<view>
+    <view class="top-menu">
+        <navigator url="/pages/index/index" class="nav-1">可使用门店></navigator>
+        <navigator url="/pages/index/index" class="nav-2">我的兑换></navigator>
+        <navigator url="/pages/index/index" class="nav-3">活动规则></navigator>
+    </view>
+    <view>
+        <view class=""></view>
+    </view>
+</view>

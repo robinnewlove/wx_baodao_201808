@@ -1,10 +1,20 @@
 {
   "pages":[
+
+    "pages/exchange/exchange",
+    "pages/index/index",
     "pages/main/main",
-    "pages/test/test",
+
+    "pages/visit/visit",
+
     "pages/moment/index",
 
-    "pages/index/index",
+    "pages/test/test",
+
+
+
+
+
 
 
     "pages/logs/logs",

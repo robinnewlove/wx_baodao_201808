@@ -1,0 +1,38 @@
+<view>
+    <view class="top-navigator"></view>
+    <view class="top">
+        <view>行走的力量</view>
+        <view>运动和热情燃烧你的能量</view>
+    </view>
+    <view class="banner">
+        <view>已累计<text class="allstep">{{allstep}}</text>步</view>
+        <view>不要羡慕我，我只是腿长</view>
+    </view>
+    <view class="userinfobox">
+        <view class="userheader"><open-data type="userAvatarUrl"></open-data></view>
+        <view class="userheadertxt">Hi,<open-data class="userinfo-nickname" type="userNickName"></open-data> !</view>
+        <navigator url="/pages/test/test" class="navigator-guize">活动规则></navigator>
+    </view>
+    <view class="circleBar">
+        <view class="circleBarbody">
+            <canvas class="cir" style=' width:120px; height:120px;' canvas-id="canvasArc"></canvas>
+            <view class="centerWord"><text>好友助力步数</text><text class="step">{{allstep}}</text></view>
+        </view>
+    </view>
+    <view class="userstep-list">
+
+        <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
+          <image src="{{item.userheader}}" class="userstep-header"></image>
+          <view class="userstep-name">{{item.username}}</view>
+          <view class="userstep-num">为你助力{{item.userstep}}步</view>
+        </view>
+    </view>
+    <view class="btn-box">
+        <view>
+            <button bindtap="">为TA助力</button>
+        </view>
+        <view>
+            <navigator url="/pages/index/index">我也要参加</navigator>
+        </view>
+    </view>
+</view>

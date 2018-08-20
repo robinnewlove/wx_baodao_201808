@@ -1,4 +1,5 @@
 <view>
+    <view class="top-navigator"></view>
     <view class="top">
         <view>行走的力量</view>
         <view>运动和热情燃烧你的能量</view>
@@ -31,10 +32,10 @@
     <view class="userOrderList">
         <view class="userOrderList-title">排行榜</view>
         <view class="userOrderListbody">
-            <view wx:for="{{userOrderList}}" wx:key="username" class="userOrderList-col">
-                      <image src="{{item.userheader}}" class="userOrderList-header"></image>
-                      <view class="userOrderList-name">{{item.username}}</view>
-                      <view class="userOrderList-num">{{item.userstep}}步</view>
+            <view wx:for="{{userOrderList}}" wx:key="name" class="userOrderList-col">
+                      <image src="{{item.avatar}}" class="userOrderList-header"></image>
+                      <view class="userOrderList-name">{{item.name}}</view>
+                      <view class="userOrderList-num">{{item.runNumber}}步</view>
                       <progress class="userOrderList-progress" percent="{{item.userprogress}}" active />
                     </view>
         </view>
@@ -45,4 +46,4 @@
 <view class="sharebox" animation="{{animationData}}">
         <view class="sharebox-1"><button open-type="share" class="share-1"></button><text>分享给好友</text></view>
         <view class="sharebox-2"><image src="https://www.zhenzhezixun.com/images/share-ico-2.png"></image><text>分享到朋友圈</text></view>
-    </view>
+</view>

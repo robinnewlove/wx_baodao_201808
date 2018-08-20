@@ -48,13 +48,10 @@ page{
 .userstep-name{font-size: 24rpx;height: 36rpx; line-height: 36rpx; float: left; }
 .userstep-num{float: right;height: 36rpx; line-height: 36rpx; color: #848484; font-size: 24rpx;}
 
-.userOrderList{background: #fff;}
-.userOrderList-title{height: 100rpx; line-height: 100rpx;border-bottom: 1px solid #e5e5e5;padding-left: 60rpx;}
-.userOrderListbody{padding-top: 36rpx;overflow: hidden;}
-.userOrderList-col{overflow: hidden;padding-left: 57rpx;padding-right: 57rpx; margin-bottom: 26rpx;}
-.userOrderList-header{width: 56rpx; height: 56rpx;border-radius: 56rpx; float: left; margin-right: 17rpx;}
-.userOrderList-progress{width: 420rpx;float: left;}
+.btn-box{overflow: hidden; background: #fff;padding: 20rpx 0;position: fixed; bottom: 0px; width: 100%;}
+.btn-box view{float:left; width: 50%; text-align: center;}
+.btn-box view button{background: #fa3442;color: #fff;width:300rpx;height: 90rpx;line-height: 90rpx;border-radius:10rpx;}
+.btn-box view navigator{background: #fa3442;color: #fff;width:300rpx;height: 90rpx;display: inline-block;line-height: 90rpx;border-radius:10rpx;}
 
-.userOrderList-name{font-size: 24rpx;height: 36rpx; line-height: 36rpx; float: left;width: 420rpx; color: #5c5c5c; }
-.userOrderList-num{float: right;height: 36rpx; line-height: 36rpx; color: #848484; font-size: 24rpx;}
+
 
