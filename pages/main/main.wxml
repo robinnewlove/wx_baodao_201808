@@ -5,9 +5,9 @@
         <view>运动和热情燃烧你的能量</view>
     </view>
     <view class="banner">
-        <view>已累计<text class="allstep">{{allstep}}</text>步</view>
+        <view>已累计<text class="allstep">{{step}}</text>步</view>
         <view>不要羡慕我，我只是腿长</view>
-        <navigator url="/page/navigate/navigate?title=navigate" class="navigator-exchange"></navigator>
+        <navigator url="/pages/exchange/exchange" class="navigator-exchange"></navigator>
     </view>
     <view class="userinfobox">
         <view class="userheader"><open-data type="userAvatarUrl"></open-data></view>
@@ -24,9 +24,9 @@
     <view class="userstep-list">
 
         <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
-          <image src="{{item.userheader}}" class="userstep-header"></image>
-          <view class="userstep-name">{{item.username}}</view>
-          <view class="userstep-num">为你助力{{item.userstep}}步</view>
+          <image src="{{item.avatarUrl}}" class="userstep-header"></image>
+          <view class="userstep-name">{{item.name}}</view>
+          <view class="userstep-num">为你助力{{item.step}}步</view>
         </view>
     </view>
     <view class="userOrderList">
@@ -36,7 +36,7 @@
                       <image src="{{item.avatar}}" class="userOrderList-header"></image>
                       <view class="userOrderList-name">{{item.name}}</view>
                       <view class="userOrderList-num">{{item.runNumber}}步</view>
-                      <progress class="userOrderList-progress" percent="{{item.userprogress}}" active />
+                      <progress class="userOrderList-progress" percent="{{item.runScale}}" active />
                     </view>
         </view>
     </view>
@@ -45,5 +45,15 @@
 <view class="maskbox {{maskboxshow}}" bindtap="hideshare"></view>
 <view class="sharebox" animation="{{animationData}}">
         <view class="sharebox-1"><button open-type="share" class="share-1"></button><text>分享给好友</text></view>
-        <view class="sharebox-2"><image src="https://www.zhenzhezixun.com/images/share-ico-2.png"></image><text>分享到朋友圈</text></view>
+        <view class="sharebox-2">< button bindtap="shereImgshow" class="share-2"></button><text>分享到朋友圈</text></view>
 </view>
+
+<view class="shareimgbox" wx:if="{{showimgbox}}">
+<view class="shareimgboxbody" style='height: {{ canvasHeight }}px;width:{{canvasWidth}}px'>
+<canvas canvas-id='myCanvas' class='canvas' style='height: {{ canvasHeight }}px;width:{{canvasWidth}}px'></canvas>
+    <button class="closeshare" bindtap="closesaveImage"></button>
+</view>
+    <button class='btn-save-local' bindtap='saveImageTap' style='width:{{canvasWidth}}px'>保存图片，去朋友圈分享</button>
+</view>
+
+

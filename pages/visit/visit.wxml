@@ -5,12 +5,12 @@
         <view>运动和热情燃烧你的能量</view>
     </view>
     <view class="banner">
-        <view>已累计<text class="allstep">{{allstep}}</text>步</view>
+        <view>已累计<text class="allstep">{{step}}</text>步</view>
         <view>不要羡慕我，我只是腿长</view>
     </view>
     <view class="userinfobox">
-        <view class="userheader"><open-data type="userAvatarUrl"></open-data></view>
-        <view class="userheadertxt">Hi,<open-data class="userinfo-nickname" type="userNickName"></open-data> !</view>
+        <view class="userheader"><image src="{{avatarUrl}}"></image></view>
+        <view class="userheadertxt"><text>{{nickName}}</text></view>
         <navigator url="/pages/test/test" class="navigator-guize">活动规则></navigator>
     </view>
     <view class="circleBar">
@@ -21,15 +21,16 @@
     </view>
     <view class="userstep-list">
 
-        <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
-          <image src="{{item.userheader}}" class="userstep-header"></image>
-          <view class="userstep-name">{{item.username}}</view>
-          <view class="userstep-num">为你助力{{item.userstep}}步</view>
+            <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
+              <image src="{{item.avatarUrl}}" class="userstep-header"></image>
+              <view class="userstep-name">{{item.name}}</view>
+              <view class="userstep-num">为你助力{{item.step}}步</view>
+            </view>
         </view>
-    </view>
+
     <view class="btn-box">
         <view>
-            <button bindtap="">为TA助力</button>
+            <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">为TA助力</button>
         </view>
         <view>
             <navigator url="/pages/index/index">我也要参加</navigator>

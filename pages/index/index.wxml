@@ -1,7 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-    <navigator class="mainlink" url="/pages/main/main" hover-class="navigator-hover"></navigator>
-
+<button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="mainlink"></button>
+    <!--navigator class="mainlink" url="/pages/main/main" hover-class="navigator-hover"></navigator-->
+<!--navigator class="mainlink" url="/pages/visit/visit?openId=ongkJ0fp6FYisa45VyvcKzeChJ8E" hover-class="navigator-hover"></navigator-->
 </view>
 
 

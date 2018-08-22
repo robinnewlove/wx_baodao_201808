@@ -20,4 +20,4 @@
   margin-top: 200px;
 }
 
-.mainlink{position: fixed; width: 100%; bottom: 0;top:0;background: url('https://www.zhenzhezixun.com/images/index.jpg'); background-size: 100% auto}
+.mainlink{position: fixed; width: 100%; bottom: 0;top:0;background: url('https://werun.renlai.fun/static/images/index.jpg'); background-size: 100% auto;border-radius:0px;}

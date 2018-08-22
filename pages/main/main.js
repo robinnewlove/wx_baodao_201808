@@ -1,4 +1,6 @@
 const app = getApp()
+const avatarStrokeWidth = 2;
+const stringUtil = require('../../utils/stringUtil.js');
 
 Page({
     data: {
@@ -7,12 +9,35 @@ Page({
         iv:null,
         sessionId:null,
         openId:null,
-        step:null,
+        step:0,
         allstep:0,
         friendlist:[],
         userOrderList:[],
         animationData: {},
-        maskboxshow:""
+        maskboxshow:"",
+        userInfo:"",
+        path:"",
+        showimgbox:false,
+
+        //画布相关字段
+        canvasHeight:"0",
+        canvasWidth:"0",
+        avatar:'https://werun.renlai.fun/static/images/sharepage-1.jpg',
+        bgImage: 'https://werun.renlai.fun/static/images/sharepage-1.jpg',
+        qurl:"",
+        imgload:0,
+        bgImagePath:"",
+        avatarPath:"",
+        qurlPath:"",
+        targetSharePath: null,
+        avatarWidth:'0',
+        avatarLeft:"",
+        avatarTop:"",
+        nickName:"亲爱的用户",
+        nickNameTop:"",
+        nickNameLeft:"",
+        qcodeTop:"",
+        qcodeWidth:0,
     },
     onLoad: function () {
 
@@ -56,7 +81,17 @@ Page({
                         that.getFriendList();
 
                         //获取排行榜
-                        that.getUserOrderList()
+                        that.getUserOrderList();
+
+                        //获取用户总步数
+                        that.getUserInfo();
+
+                        that.postUserInfo();
+
+                        that.getUserqrcode();
+
+                        // that.shareMoments();
+                        //console.log(that.data.userInfo)
                     }
                   })
                 } else {
@@ -64,7 +99,48 @@ Page({
                 }
               }
         }),
+        wx.getSetting({
+                success: function (res) {
+                    //console.log(res.authSetting['scope.userInfo']);
+                    if (res.authSetting['scope.userInfo']) {
+                        // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                        wx.getUserInfo({
+                            success: function (res) {
+                                console.log("获取用户信息成功");
+                                console.log(res.userInfo)
 
+                                that.setData({
+                                    userInfo:res.userInfo,
+                                    nickName:res.userInfo.nickName
+                                });
+
+                                //console.log("that.data.avatar"+that.data.avatar)
+                            }
+                        })
+                    }
+                }
+            }),
+        wx.getSystemInfo({
+                success: function (res) {
+                    //console.log(res.windowWidth)
+                    //根据图片算图片矩形的宽高
+                    var scaleNum = res.windowWidth*0.7/750;
+                    that.setData({
+                        canvasWidth:res.windowWidth*0.7,
+                        canvasHeight:scaleNum*1334,
+                        avatarWidth:scaleNum*173,
+                        avatarTop:scaleNum*113,
+                        avatarLeft:scaleNum*61,
+                        nickNameTop:scaleNum*172,
+                        nickNameLeft:scaleNum*292,
+                        qcodeTop:scaleNum*1016,
+                        qcodeWidth:scaleNum*250*0.8
+                    })
+
+
+                    //console.log("qcodeWidth:"+that.data.qcodeWidth)
+                },
+            }),
         wx.showShareMenu({
             withShareTicket: true
         });
@@ -160,10 +236,6 @@ Page({
             }, 20)
         })
     },
-    /*下拉刷新*/
-    onPullDownRefresh: function(){
-        wx.stopPullDownRefresh()
-    },
 
     //获取用户加油列表
     getFriendList: function () {
@@ -172,13 +244,13 @@ Page({
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/get_help_werun',
             data: {
-                openId: that.data.openId
+                openid: that.data.openId
             },
             method: 'GET',
             success: function (res) {
-                //console.log(res.data)
+                console.log(res.data.data.userlist);
                 that.setData({
-                    friendlist: res.data,
+                    friendlist: res.data.data.userlist
                 });
 
             }
@@ -201,7 +273,7 @@ Page({
 
                 if(res.data.errcode == "0"){
                     that.setData({
-                        userOrderList: res.data.userlist,
+                        userOrderList: res.data.data,
                     });
                 }
                 else{
@@ -210,6 +282,62 @@ Page({
             }
         })
 
+    },
+    
+    getUserInfo:function () {
+        let that = this;
+        wx.request({
+            url: 'https://werun.renlai.fun/wechat/wx/get_user_werun',
+            data: {
+                openId: that.data.openId
+            },
+            method: 'GET',
+            success: function (res) {
+                //console.log(res.data)
+
+                if(res.data.errcode == "0"){
+                    //console.log(res.data.data.step)
+                    that.setData({
+                        step: res.data.data.step,
+                        //avatar: res.data.data.avatarUrl
+                    });
+
+                }
+                else{
+                    console.log("用户步数据异常")
+                }
+            }
+        })
+    },
+
+    postUserInfo:function () {
+        let that = this;
+        console.log(that.data.openId)
+        wx.request({
+            url: 'https://werun.renlai.fun/wechat/wx/post_userinfo',
+            data: {
+                openId: that.data.openId,
+                nickName:that.data.userInfo.nickName,
+                avatarUrl:that.data.userInfo.avatarUrl,
+                gender:that.data.userInfo.gender,
+                city:that.data.userInfo.city,
+                province:that.data.userInfo.province,
+                country:that.data.userInfo.country,
+                language:that.data.userInfo.language
+            },
+            method: 'POST',
+            success: function (res) {
+                //console.log(res.data)
+
+                if(res.data.errcode == "0"){
+                    //console.log(res.data.data.step)
+                    console.log("写入用户信息成功")
+                }
+                else{
+                    console.log("写入用户信息失败")
+                }
+            }
+        })
     },
 
     //显示分享层
@@ -252,47 +380,328 @@ Page({
     },
 
     //分享
-
-
     onShareAppMessage: function (res) {
+        let that = this;
         if (res.from === 'button') {
             // 来自页面内转发按钮
             //console.log(res.target)
         }
         return {
             title: '快来帮我凑步数',
-            path: '/pages/visit/visit',
-            imageUrl:'https://www.zhenzhezixun.com/images/share.jpg'
-            // success: function (res) {
-            //     // 转发成功
-            //     console.log('123');
-            //     var shareTickets = res.shareTickets;
-            //     var shareTicket = shareTickets;
-            //     // wx.getShareInfo({
-            //     //     shareTicket: shareTicket,
-            //     //     success: function (res) {
-            //     //         console.log('success');
-            //     //         console.log(res);
-            //     //         //console.log(res);
-            //     //         wx.showToast({
-            //     //             title: '转发成功',
-            //     //             duration: 5000
-            //     //         })
-            //     //     },
-            //     //     fail: function (res) {
-            //     //         console.log('fail');
-            //     //         console.log(res);
-            //     //         wx.showToast({
-            //     //             title: 'fail:' + res.errMsg,
-            //     //             duration: 5000
-            //     //         })
-            //     //     }
-            //     // });
-            // },
-            // fail: function (res) {
-            //     // 转发失败
-            // }
+            path: '/pages/visit/visit?openId='+that.data.openId,
+            imageUrl:'https://werun.renlai.fun/static/images/share.jpg'
 
         }
+    },
+    
+    shereImgshow:function () {
+        let that = this;
+        that.hideshare();
+        that.setData({
+            showimgbox:true
+        });
+
+        that.shareMoments();
+    },
+
+    //或许用户小程序码
+    getUserqrcode:function () {
+        let that = this;
+
+        wx.request({
+            url: 'https://werun.renlai.fun/wechat/wx/get_user_qrcode',
+            data: {
+                openId: that.data.openId,
+            },
+            method: 'GET',
+            success: function (res) {
+                //console.log(res.data)
+                if(res.data.errcode == "0"){
+                    console.log(res.data.data.qrcode)
+                    that.setData({
+                        qurl:res.data.data.qrcode
+                    })
+
+
+                }
+
+            }
+        })
+    },
+
+
+    showLoading: function () {
+        wx.showLoading({
+            title: '加载中...',
+        })
+    },
+
+    hideLoading: function () {
+        wx.hideLoading();
+    },
+
+    shareMoments: function () {
+        var that = this;
+        //没有分享图先用 canvas 生成，否则直接预览
+        // if (that.data.targetSharePath) {
+        //     that.setData({
+        //         realShow: false
+        //     })
+        // } else {
+            that.showLoading();
+            that.downloadAvatar();
+        //}
+    },
+
+    showErrorModel: function (content) {
+        this.hideLoading();
+        if (!content) {
+            content = '网络错误';
+        }
+        wx.showModal({
+            title: '提示',
+            content: content,
+        })
+    },
+
+    /**
+     * 改变字体样式
+     */
+    setFontStyle: function (ctx, fontWeight) {
+        if (wx.canIUse('canvasContext.font')) {
+            ctx.font = 'normal ' + fontWeight + ' ' + '14px' + ' sans-serif';
+        }
+    },
+
+    //下载资源
+    downloadAvatar: function () {
+        var that = this;
+        console.log('这里是重新开始')
+        that.setData({
+            imgload:0
+        });
+        wx.downloadFile({
+            url: that.data.avatar,
+            success: function (res) {
+                that.setData({
+                    avatarPath: res.tempFilePath,
+                    imgload:that.data.imgload+1
+                })
+                //console.log(that.data.imgload);
+                if(that.data.imgload == 3){
+                    //console.log('这里是第一个')
+                    console.log('执行画画1');
+                    that.drawImage();
+                }
+            },
+            fail: function () {
+                that.showErrorModel();
+            }
+        });
+        wx.downloadFile({
+            url: that.data.bgImage,
+            success: function (res) {
+                that.setData({
+                    bgImagePath: res.tempFilePath,
+                    imgload:that.data.imgload+1
+                })
+                //console.log(that.data.imgload);
+                if(that.data.imgload == 3){
+                    //console.log('这里是第二个')
+                    console.log('执行画画2');
+                    that.drawImage();
+                }
+
+            },
+            fail: function () {
+                that.showErrorModel();
+            }
+        });
+        const downloadTask = wx.downloadFile({
+            url: that.data.qurl,
+            success: function (res) {
+                that.setData({
+                    qurlPath: res.tempFilePath,
+                })
+                //console.log(that.data.imgload);
+            },
+            fail: function () {
+                that.showErrorModel();
+            }
+        })
+        downloadTask.onProgressUpdate((res) => {
+            console.log(res.progress)
+            if(res.progress == 100){
+
+                that.setData({
+                    imgload:that.data.imgload+1
+                })
+                if(that.data.imgload == 3){
+                    console.log('执行画画3');
+                    that.drawImage();
+                }
+            }
+        })
+
+    },
+
+    drawImage: function () {
+        console.log('开始画画');
+        var that = this;
+        const ctx = wx.createCanvasContext('myCanvas', this);
+
+
+
+
+
+
+        var bgPath = that.data.bgImagePath;
+        ctx.setFillStyle("#000000");
+        ctx.fillRect(0, 0, that.data.canvasWidth, that.data.canvasHeight);
+
+        //绘制背景图片
+        ctx.drawImage(bgPath, 0, 0, that.data.canvasWidth, that.data.canvasHeight);
+
+        //绘制头像
+        ctx.arc(that.data.avatarWidth/2+avatarStrokeWidth+that.data.avatarLeft, that.data.avatarWidth/2+avatarStrokeWidth+that.data.avatarTop, that.data.avatarWidth/2+avatarStrokeWidth, 0, 2 * Math.PI);
+        ctx.setFillStyle('#FFFFFF');
+        ctx.fill();
+
+        //头像裁剪
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(that.data.avatarWidth/2+avatarStrokeWidth+that.data.avatarLeft, that.data.avatarWidth/2+avatarStrokeWidth+that.data.avatarTop, that.data.avatarWidth/2, 0, 2 * Math.PI);
+        // ctx.setFillStyle("#EEEEEE");
+        // ctx.fill();
+        ctx.setStrokeStyle("#FFFFFF");
+        ctx.stroke();
+        ctx.clip();
+
+        var avatarWidth = that.data.avatarWidth;//头像半径
+
+
+        ctx.drawImage(that.data.avatar,that.data.avatarLeft+avatarStrokeWidth,that.data.avatarTop+avatarStrokeWidth, avatarWidth, avatarWidth);
+        ctx.restore();
+
+        //用户名
+        that.setFontStyle(ctx, 'bold');
+        ctx.setFillStyle("#FFFFFF");
+        ctx.setFontSize(20);
+        ctx.setTextAlign('left');
+        ctx.setTextBaseline('top');
+        ctx.fillText(stringUtil.substringStr(that.data.nickName),that.data.nickNameLeft,that.data.nickNameTop);
+
+        //
+
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(that.data.qcodeWidth/2+that.data.avatarLeft*1.1, that.data.qcodeWidth/2+that.data.qcodeTop, that.data.qcodeWidth/2*1.1, 0, 2 * Math.PI);
+        ctx.setFillStyle("#FFFFFF");
+        ctx.fill();
+        ctx.clip();
+
+
+
+
+
+        ctx.drawImage(that.data.qurlPath,that.data.avatarLeft+avatarStrokeWidth,that.data.qcodeTop, that.data.qcodeWidth,that.data.qcodeWidth);
+
+        //绘制到 canvas 上
+        ctx.draw(false, function () {
+            console.log('callback--------------->');
+            that.saveCanvasImage();
+        });
+    },
+
+    saveCanvasImage: function () {
+        var that = this;
+        wx.canvasToTempFilePath({
+            canvasId: 'myCanvas',
+            success: function (res) {
+                console.log(res.tempFilePath);
+                that.setData({
+                    targetSharePath: res.tempFilePath,
+                    realShow: false
+                })
+            },
+            complete: function () {
+                that.hideLoading();
+            }
+        }, this)
+    },
+    /**
+     * 保存到相册
+     */
+    saveImageTap: function () {
+        var that = this;
+        that.requestAlbumScope();
+    },
+
+    /**
+     * 检测相册权限
+     */
+    requestAlbumScope: function () {
+        var that = this;
+        // 获取用户信息
+        wx.getSetting({
+            success: res => {
+                if (res.authSetting['scope.writePhotosAlbum']) {
+                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                    that.saveImageToPhotosAlbum();
+                } else {
+                    wx.authorize({
+                        scope: 'scope.writePhotosAlbum',
+                        success(res) {
+                            that.saveImageToPhotosAlbum();
+                        },
+                        fail() {
+                            wx.showModal({
+                                title: '提示',
+                                content: '你需要授权才能保存图片到相册',
+                                success: function (res) {
+                                    if (res.confirm) {
+                                        wx.openSetting({
+                                            success: function (res) {
+                                                if (res.authSetting['scope.writePhotosAlbum']) {
+                                                    that.saveImageToPhotosAlbum();
+                                                } else {
+                                                    console.log('用户未同意获取用户信息权限-------->success');
+                                                }
+                                            },
+                                            fail: function () {
+                                                console.log('用户未同意获取用户信息权限-------->fail');
+                                            }
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        })
+    },
+
+    saveImageToPhotosAlbum: function () {
+        var that = this;
+        wx.saveImageToPhotosAlbum({
+            filePath: that.data.targetSharePath,
+            success: function () {
+                wx.showModal({
+                    title: '',
+                    content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+                    showCancel: false
+                })
+                that.hideDialog();
+            }
+        })
+    },
+
+    closesaveImage:function () {
+        let that = this;
+        that.setData({
+            showimgbox:false
+        })
     }
 })

@@ -66,9 +66,7 @@ Page({
     bgImage1Path: null,
     realShow: false,
     imgload:0,
-    userInfo:[],
-    _imgboxwidth:0,
-    _imgboxheight:0,
+    userInfo:[]
   },
 
   /**
@@ -78,19 +76,12 @@ Page({
     let that = this;
     wx.getSystemInfo({
       success: function (res) {
-
-        console.log(res.windowWidth)
-
-        //根据图片算图片矩形的宽高
-        that.data._imgboxwidth = res.windowWidth*0.8;
-        that.data._imgboxheight = (res.windowWidth*1334)/750*0.8;
-
         windowWidth = res.windowWidth*0.7;
         windowHeight = res.windowWidth * scale*0.7;
 
         _windowWidth_pos = (res.windowWidth-windowWidth)/2
         that.setData({
-          canvasHeight: that.data._imgboxheight,
+          canvasHeight: windowHeight,
           imageWidth: windowWidth * 0.7,
           imageHeight: windowHeight * 0.7
         })
@@ -244,32 +235,32 @@ Page({
     var that = this;
     const ctx = wx.createCanvasContext('myCanvas', this);
     var bgPath = that.data.bgImage1Path;
-    ctx.setFillStyle("#333333");
-    ctx.fillRect(0, 0, that.data._imgboxwidth, that.data._imgboxheight);
+    ctx.setFillStyle(WHITE);
+    ctx.fillRect(0, 0, windowWidth, windowHeight);
 
     //绘制背景图片
     //ctx.drawImage(bgPath, _windowWidth_pos, 10, windowWidth, windowHeight * bgScale);
 
-    //ctx.drawImage(bgPath, 0, 0, that.data._imgboxwidth, that.data._imgboxheight);
+    ctx.drawImage(bgPath, _windowWidth_pos, 10, 750, 1334);
 
     //头像背景圆
-    // ctx.arc(windowWidth / 2-_windowWidth_pos/2, 113*0.7, (avatarWidthScale / 2) * windowWidth + avatarStrokeWidth, 0, 2 * Math.PI);
-    // ctx.setFillStyle('#333333');
-    //ctx.fill();
+    ctx.arc(windowWidth / 2-_windowWidth_pos/2, 113*0.7, (avatarWidthScale / 2) * windowWidth + avatarStrokeWidth, 0, 2 * Math.PI);
+    ctx.setFillStyle('#333333');
+    ctx.fill();
 
     // //先绘制圆，裁剪成圆形图片
-    // ctx.save();
-    // ctx.beginPath();
-    // // //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
-    // ctx.arc(windowWidth / 2-_windowWidth_pos/2, 113*0.7, (avatarWidthScale / 2) * windowWidth+avatarStrokeWidth, 0, 2 * Math.PI);
-    // ctx.setStrokeStyle(WHITE);
-    // ctx.stroke();
-    // ctx.clip();
+    ctx.save();
+    ctx.beginPath();
+    // //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
+    ctx.arc(windowWidth / 2-_windowWidth_pos/2, 113*0.7, (avatarWidthScale / 2) * windowWidth+avatarStrokeWidth, 0, 2 * Math.PI);
+    ctx.setStrokeStyle(WHITE);
+    ctx.stroke();
+    ctx.clip();
     // 绘制头像
     // //图片路径，左上角x坐标，左上角y坐标，宽，高
-    // var avatarWidth = avatarWidthScale * windowWidth;//头像半径
-    //  ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - avatarWidthScale / 2)-_windowWidth_pos/2, avatarHeightScale * windowHeight-10, avatarWidth, avatarWidth);
-    //  ctx.restore();
+    var avatarWidth = avatarWidthScale * windowWidth;//头像半径
+     ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - avatarWidthScale / 2)-_windowWidth_pos/2, avatarHeightScale * windowHeight-10, avatarWidth, avatarWidth);
+     ctx.restore();
 
     // //绘制 content
     // ctx.setFillStyle(GRAY_COLOR);
@@ -282,14 +273,14 @@ Page({
     // ctx.fillText(that.data.detailStr.contentOther, windowWidth / 2, contentScale2 * windowHeight);
 
     //绘制二维码
-    // ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
-    // console.log('font------------>' + wx.canIUse('canvasContext.font'));
-    //
-    // //绘制 按压提示文字
-    // ctx.setFillStyle(TINT_COLOR);
-    // ctx.setFontSize(10);
-    // ctx.setTextAlign('center');
-    // ctx.fillText(that.data.detailStr.clickToMini, windowWidth / 2, decodeScale * windowHeight);
+    ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
+    console.log('font------------>' + wx.canIUse('canvasContext.font'));
+
+    //绘制 按压提示文字
+    ctx.setFillStyle(TINT_COLOR);
+    ctx.setFontSize(10);
+    ctx.setTextAlign('center');
+    ctx.fillText(that.data.detailStr.clickToMini, windowWidth / 2, decodeScale * windowHeight);
 
     //绘制加粗文字--------------------------------------------------------------
     //绘制昵称

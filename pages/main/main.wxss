@@ -33,6 +33,12 @@ page{
 .share-1::after{
   border: none;
 }
+
+.share-2{width:120rpx; height: 100rpx;background: url('https://werun.renlai.fun/static/images/share-ico-2.png');background-size: 120rpx 100rpx; border: 0px;}
+.share-2::after{
+  border: none;
+}
+
 .sharebox-2{width: 50%; height: 150rpx;float: left;text-align: center; padding-top: 50rpx;}
 .sharebox-2 image{width:120rpx; height: 100rpx;}
 
@@ -57,4 +63,18 @@ page{
 
 .userOrderList-name{font-size: 24rpx;height: 36rpx; line-height: 36rpx; float: left;width: 420rpx; color: #5c5c5c; }
 .userOrderList-num{float: right;height: 36rpx; line-height: 36rpx; color: #848484; font-size: 24rpx;}
+
+.shareimgbox{position: fixed;top:0px;bottom: 0px;background: #000000;width: 100%;padding-top: 50px; overflow: hidden}
+
+.shareimgboxbody{margin: auto;margin-bottom: 20px;position: relative;}
+.closeshare{position: absolute;width: 60rpx;height: 60rpx; display: inline-block;top:-70rpx;right: -70rpx;background: url('https://werun.renlai.fun/static/images/close.png'); background-size: 100% 100%;padding: 0px; border: 0px;z-index: 9999}
+.closeshare::after{
+  border: none;
+}
+
+.btn-save-local{height: 80rpx;line-height: 80rpx;font-size: 30rpx;}
+
+.share-image{position: absolute}
+
+.canvasbox{width: 0px; height: 0px;overflow: hidden}
 

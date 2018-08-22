@@ -7,12 +7,17 @@ Page({
         iv:null,
         sessionId:null,
         openId:null,
-        step:null,
+        visitopenid:null,
+        step:0,
         allstep:0,
         friendlist:[],
         userOrderList:[],
         animationData: {},
-        maskboxshow:""
+        maskboxshow:"",
+        nickName:"",
+        avatarUrl:"",
+        useropenId:"",
+        canIUse: wx.canIUse('button.open-type.getUserInfo')
     },
     onLoad: function (e) {
 
@@ -22,42 +27,39 @@ Page({
             openId: e.openId,
         });
 
+        wx.login({
+            success: function (res) {
+                if (res.code) {
+                    //发起网络请求
+                    wx.request({
+                        url: 'https://werun.renlai.fun/wechat/wx/user_login',
+                        data: {
+                            code: res.code
+                        },
+                        method:"GET",
+                        success:function (res){
+                            that.setData({
+                                visitopenid: res.data.openid
+                            });
+                            //console.log(that.data.userInfo)
+                        }
+                    })
+                } else {
+                    console.log('登录失败！' + res.errMsg)
+                }
+            }
+        }),
 
 
-
+        //获取朋友
         that.getFriendList();
 
-        that.postFriendStep();
+        //that.postFriendStep();
+
+        //获取用户总步数
+        that.getUserInfo();
     },
-    decodeUserInfo: function () {
-        let that = this;
 
-        wx.request({
-            url: 'https://werun.renlai.fun/wechat/decrypy',
-            data: {
-                encryptedData: that.data.encryptedData,
-                iv: that.data.iv,
-                sessionKey: wx.getStorageSync('sessionId')
-            },
-            method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-            // header: {}, // 设置请求的 header
-            success: function (res) {
-                console.log(res.data);
-
-                let todayStep = res.data.stepInfoList.pop();
-                that.setData({
-                    allstep: todayStep.step
-                    //allstep: 15000
-                 });
-                 //console.log(that.data.step);
-                // 以下两个是测试数据
-                let totalItems = 100;
-                let rightItems = Math.round(that.data.allstep/100);
-                that.showScoreAnimation(rightItems, totalItems);
-            }
-        })
-
-    },
 
     showScoreAnimation: function (rightItems, totalItems) {
         /*
@@ -119,10 +121,6 @@ Page({
             }, 20)
         })
     },
-    /*下拉刷新*/
-    onPullDownRefresh: function(){
-        wx.stopPullDownRefresh()
-    },
 
     //获取用户加油列表
     getFriendList: function () {
@@ -135,57 +133,73 @@ Page({
             },
             method: 'GET',
             success: function (res) {
-                //console.log(res.data)
                 that.setData({
-                    friendlist: res.data,
+                    friendlist:res.data.data.userlist,
+                    allstep:res.data.data.total
                 });
+
+                let totalItems = 100;
+                let rightItems = Math.round(that.data.allstep/100);
+                that.showScoreAnimation(rightItems, totalItems);
 
             }
         })
 
     },
 
-    getFriendAll:function () {
+    //获取用户总步数
+    getUserInfo:function () {
         let that = this;
-
         wx.request({
-            url: 'https://werun.renlai.fun/wechat/wx/post_help_werun',
+            url: 'https://werun.renlai.fun/wechat/wx/get_user_werun',
             data: {
                 openId: that.data.openId
             },
             method: 'GET',
             success: function (res) {
                 //console.log(res.data)
-                that.setData({
-                    friendlist: res.data,
-                });
 
+                if(res.data.errcode == "0"){
+                    //console.log(res.data.data.step)
+                    that.setData({
+                        step: res.data.data.step,
+                        nickName: res.data.data.name,
+                        avatarUrl: res.data.data.avatarUrl
+                    });
+                }
+                else{
+                    console.log("用户步数据异常")
+                }
             }
         })
-
     },
-    //助力
 
-    postFriendStep:function () {
+
+
+
+
+    bindGetUserInfo: function(e) {
+        console.log(e.detail.userInfo)
         let that = this;
-
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/post_help_werun',
             data: {
-                openId: that.data.openId
-            },
-            method: 'GET',
+                openId: that.data.visitopenid,
+                fromOpenId:that.data.openId,
+                name:that.data.nickName,
+                avatarUrl:that.data.avatarUrl
+    },
+            method: 'POST',
             success: function (res) {
-                //console.log(res.data)
-                that.setData({
-                    friendlist: res.data,
-                });
+                console.log(res.data)
+                if(res.data.errcode == "0"){
+                    that.getFriendList();
+                    that.getUserInfo();
+                }else{
 
+                }
             }
         })
-
-    },
-
-    //分享
+    }
 
 })

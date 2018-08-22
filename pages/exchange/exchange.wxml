@@ -4,7 +4,17 @@
         <navigator url="/pages/index/index" class="nav-2">我的兑换></navigator>
         <navigator url="/pages/index/index" class="nav-3">活动规则></navigator>
     </view>
-    <view>
-        <view class=""></view>
+    <view class="voucherbox">
+        <view class="voucher-1">
+
+        </view>
+        <view class="voucher-2"></view>
+        <view class="voucher-3"></view>
     </view>
+    <view class="product-view-1">
+        <image src="https://werun.renlai.fun/static/images/product-1.jpg" mode="widthFix"></image>
+    </view>
+    <view class="product-view-2">
+            <image src="https://werun.renlai.fun/static/images/product-2.jpg" mode="widthFix" ></image>
+        </view>
 </view>

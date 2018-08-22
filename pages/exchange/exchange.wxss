@@ -1,8 +1,24 @@
-.top-menu{
-
+page{
+  background-color: #eeeeee;
 }
 
-.top-menu navigator{float: left;width: 33%;font-size:26rpx; color: #1c1c1c; box-sizing: border-box;}
-.nav-1{padding-left: 20rpx;}
+.top-menu{overflow: hidden;background:url('https://www.zhenzhezixun.com/images/top-menu-bg.jpg'); background-size:24rpx 96rpx;
+}
+
+.top-menu navigator{float: left;width: 33%;font-size:24rpx; color: #878787; box-sizing: border-box; height: 95rpx; line-height: 95rpx;}
+.nav-1{padding-left: 30rpx;}
 .nav-2{text-align: center}
-.nav-3{padding-right: 20rpx;text-align: right}
+.nav-3{padding-right: 30rpx;text-align: right}
+
+
+.voucherbox{background: #fff;overflow: hidden}
+
+.voucher-1,.voucher-2,.voucher-3{width: 703rpx;height: 427rpx;background-size: 100% auto; margin: auto; margin-bottom: 30rpx}
+.voucher-1{background-image: url('https://werun.renlai.fun/static/images/voucher-1.jpg')}
+.voucher-2{background-image: url('https://werun.renlai.fun/static/images/voucher-2.jpg')}
+.voucher-3{background-image: url('https://werun.renlai.fun/static/images/voucher-3.jpg')}
+
+.product-view-1{width: 100%; margin-top: 20rpx}
+.product-view-1 image{width: 100%;display:block;}
+.product-view-2{width: 100%;margin-top: 20rpx}
+.product-view-2 image{width: 100%;display:block;}
