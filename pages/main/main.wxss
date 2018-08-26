@@ -49,6 +49,7 @@ page{
 /*朋友数据列表*/
 
 .userstep-list{background:#fff;padding-top: 36rpx;overflow: hidden;margin-bottom: 20rpx;}
+.userstep-list-nodata{margin-bottom: 40rpx;padding-left: 30rpx; font-size: 26rpx;}
 .userstep-col{overflow: hidden;padding-left: 57rpx;padding-right: 57rpx; margin-bottom: 26rpx;}
 .userstep-header{width: 36rpx; height: 36rpx;border-radius: 36rpx; float: left; margin-right: 17rpx;}
 .userstep-name{font-size: 24rpx;height: 36rpx; line-height: 36rpx; float: left; }
@@ -57,7 +58,7 @@ page{
 .userOrderList{background: #fff;}
 .userOrderList-title{height: 100rpx; line-height: 100rpx;border-bottom: 1px solid #e5e5e5;padding-left: 60rpx;}
 .userOrderListbody{padding-top: 36rpx;overflow: hidden;}
-.userOrderList-col{overflow: hidden;padding-left: 57rpx;padding-right: 57rpx; margin-bottom: 26rpx;}
+.userOrderList-col{overflow: hidden;padding-left: 77rpx;padding-right: 57rpx; margin-bottom: 26rpx;position:relative}
 .userOrderList-header{width: 56rpx; height: 56rpx;border-radius: 56rpx; float: left; margin-right: 17rpx;}
 .userOrderList-progress{width: 420rpx;float: left;}
 
@@ -77,4 +78,7 @@ page{
 .share-image{position: absolute}
 
 .canvasbox{width: 0px; height: 0px;overflow: hidden}
+
+.jianbei_0{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-1.png'); background-size: 100% auto;left:30rpx;top:10rpx;}
+.jianbei_1{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-2.png'); background-size: 100% auto;left:30rpx;top:10rpx;}
 

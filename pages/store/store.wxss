@@ -1,0 +1,6 @@
+.storebody{padding: 30rpx 0rpx;}
+.storelist{font-size: 24rpx;border-bottom: 1px solid #eeeeee; color: #666666; padding-bottom: 20rpx;margin-bottom: 20rpx;margin: 0 50rpx; margin-top: 20rpx;}
+.storelist view{overflow: hidden; position:relative;padding-left: 120rpx;line-height:40rpx;color: #999}
+.storeleft{width: 120rpx; position: absolute; left: 0; text-align: right; color: #333;}
+
+.picker{font-size: 26rpx;border-bottom: 1px solid #eee;height: 50rpx;line-height: 50rpx;background: #eee;padding-left: 15rpx;}

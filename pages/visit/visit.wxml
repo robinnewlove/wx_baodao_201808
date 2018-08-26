@@ -11,7 +11,7 @@
     <view class="userinfobox">
         <view class="userheader"><image src="{{avatarUrl}}"></image></view>
         <view class="userheadertxt"><text>{{nickName}}</text></view>
-        <navigator url="/pages/test/test" class="navigator-guize">活动规则></navigator>
+        <navigator url="/pages/rule/rule" class="navigator-guize">活动规则></navigator>
     </view>
     <view class="circleBar">
         <view class="circleBarbody">
@@ -26,7 +26,8 @@
               <view class="userstep-name">{{item.name}}</view>
               <view class="userstep-num">为你助力{{item.step}}步</view>
             </view>
-        </view>
+            <view class="userstep-list-nodata" wx:if="{{friendlist}}">还没有好友为你助力，赶紧求助</view>
+    </view>
 
     <view class="btn-box">
         <view>

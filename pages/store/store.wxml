@@ -1,0 +1,18 @@
+<view class="storebody">
+
+<view class="section">
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class="picker" wx:if="{{firstselect}}">
+      筛选：请选择
+    </view>
+    <view class="picker"  wx:elif="{{firstselect == false}}">
+      当前选择：{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+    </view>
+  </picker>
+</view>
+    <view wx:for="{{selectdata}}" wx:key="store" class="storelist">
+        <view><text class="storeleft">店名：</text><text class="storeright">{{item.store}}</text></view>
+        <view><text class="storeleft">地址：</text><text class="storeright">{{item.addr}}</text></view>
+        <view><text class="storeleft">联系方式：</text><text class="storeright">{{item.tel}}</text></view>
+    </view>
+</view>

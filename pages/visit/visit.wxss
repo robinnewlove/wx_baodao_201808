@@ -54,5 +54,7 @@ page{
 .btn-box view button{background: #fa3442;color: #fff;width:300rpx;height: 90rpx;line-height: 90rpx;border-radius:10rpx;}
 .btn-box view navigator{background: #fa3442;color: #fff;width:300rpx;height: 90rpx;display: inline-block;line-height: 90rpx;border-radius:10rpx;}
 
+.userstep-list-nodata{margin-bottom: 40rpx;padding-left: 30rpx; font-size: 26rpx;}
+
 
 

@@ -2,18 +2,22 @@ page{
   background-color: #eeeeee;
 }
 
+button::after{
+  border: none;
+}
+
 .top-menu{overflow: hidden;background:url('https://www.zhenzhezixun.com/images/top-menu-bg.jpg'); background-size:24rpx 96rpx;
 }
 
-.top-menu navigator{float: left;width: 33%;font-size:24rpx; color: #878787; box-sizing: border-box; height: 95rpx; line-height: 95rpx;}
-.nav-1{padding-left: 30rpx;}
-.nav-2{text-align: center}
-.nav-3{padding-right: 30rpx;text-align: right}
+.top-menu navigator{width: 50%;font-size:24rpx; color: #878787; box-sizing: border-box; height: 95rpx; line-height: 95rpx;}
+.nav-1{padding-left: 30rpx;float: left;}
+
+.nav-3{padding-right: 30rpx;text-align: right;float: right}
 
 
 .voucherbox{background: #fff;overflow: hidden}
 
-.voucher-1,.voucher-2,.voucher-3{width: 703rpx;height: 427rpx;background-size: 100% auto; margin: auto; margin-bottom: 30rpx}
+.voucher-1,.voucher-2,.voucher-3{width: 703rpx;height: 427rpx;background-size: 100% auto; margin: auto; margin-bottom: 30rpx;position: relative;display: block}
 .voucher-1{background-image: url('https://werun.renlai.fun/static/images/voucher-1.jpg')}
 .voucher-2{background-image: url('https://werun.renlai.fun/static/images/voucher-2.jpg')}
 .voucher-3{background-image: url('https://werun.renlai.fun/static/images/voucher-3.jpg')}
@@ -22,3 +26,36 @@ page{
 .product-view-1 image{width: 100%;display:block;}
 .product-view-2{width: 100%;margin-top: 20rpx}
 .product-view-2 image{width: 100%;display:block;}
+
+
+.btn-3{background: url('https://werun.renlai.fun/static/images/btn-3.png');}
+.btn-4{background: url('https://werun.renlai.fun/static/images/btn-4.png');}
+.btn-5{background: url('https://werun.renlai.fun/static/images/btn-5.png');}
+.btn-6{background: url('https://werun.renlai.fun/static/images/btn-6.png');}
+.btn-3,.btn-4,.btn-5,.btn-6{width:194rpx;height: 68rpx;background-size: 100% 100%;position: absolute;left:450rpx;top:320rpx;}
+
+.maskbox{position:fixed;width: 100%;top:0px; bottom: 0px;background:rgba(0,0,0,0.5)}
+.tipbox{width: 620rpx;position: absolute;left:50%; background: #fff;margin-left: -310rpx;border-radius:10rpx;box-shadow: #000000;top:150rpx;padding-bottom: 30rpx;}
+.tipbox-1{padding-top: 50rpx;}
+.tipbox text{display: block; text-align: center;color: #333;}
+.tipbox text.txt1{font-size:60rpx}
+.tipbox text.txt2{font-size:48rpx}
+.tipbox text.txt3{font-size:24rpx; color: #666666}
+.tipbox-qcode-img{width:400rpx; height: 400rpx;margin: auto;margin-top:100rpx;border: 1px solid #666666; margin-bottom: 30rpx;}
+.tipbox-qcode-img image{width:400rpx; height: 400rpx;}
+.tipbox-qcode{text-align: center; color: #5c5c5c; font-size: 30rpx;}
+
+.tipbox-txt{font-size:24rpx;color: #999999; text-align: center; padding: 30rpx 0 30rpx 0}
+
+.tipbox-coupontip{font-size:24rpx;color: #999999; text-align: left; padding: 70rpx 30rpx 30rpx 30rpx;line-height: 180%;}
+.tipbox-coupontip-title{font-size: 30rpx;margin-bottom: 20rpx;}
+
+
+.btn-area{width: 500rpx;margin: auto; border-top: 1px solid #f2f2f2;padding-top: 44rpx;}
+.btn-area button{width:194rpx;height: 68rpx;background-size: 100% 100%;background-image:url('https://werun.renlai.fun/static/images/btn-7.png')}
+
+.tipbox-close{position: absolute; top:20rpx; right: 20rpx;width: 34rpx; height: 34rpx;background: url('https://werun.renlai.fun/static/images/tipclose.png'); background-size: 100% 100%;padding: 0px;}
+
+.section{background: #fafafa; font-size: 24rpx;width: 500rpx;height: 60rpx;border: 1px solid #e2e2e2;margin: auto; margin-top: 20rpx;}
+.section input{float: left; height: 60rpx;width:350rpx;line-height: 60rpx;text-indent: 20rpx;}
+.section__title{float: left;width: 150rpx;height: 60rpx;line-height: 60rpx; text-align: right;}

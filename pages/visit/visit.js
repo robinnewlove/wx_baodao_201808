@@ -44,6 +44,10 @@ Page({
                             //console.log(that.data.userInfo)
                         }
                     })
+
+
+
+
                 } else {
                     console.log('登录失败！' + res.errMsg)
                 }
@@ -163,8 +167,8 @@ Page({
                     //console.log(res.data.data.step)
                     that.setData({
                         step: res.data.data.step,
-                        nickName: res.data.data.name,
-                        avatarUrl: res.data.data.avatarUrl
+                        //nickName: res.data.data.name,
+                        //avatarUrl: res.data.data.avatarUrl
                     });
                 }
                 else{
@@ -175,9 +179,6 @@ Page({
     },
 
 
-
-
-
     bindGetUserInfo: function(e) {
         console.log(e.detail.userInfo)
         let that = this;
@@ -186,17 +187,30 @@ Page({
             data: {
                 openId: that.data.visitopenid,
                 fromOpenId:that.data.openId,
-                name:that.data.nickName,
-                avatarUrl:that.data.avatarUrl
+                name:e.detail.userInfo.nickName,
+                avatarUrl:e.detail.userInfo.avatarUrl
     },
             method: 'POST',
             success: function (res) {
                 console.log(res.data)
                 if(res.data.errcode == "0"){
+                    wx.showModal({
+                        content:"你已为好友助力"+res.data.data.step+"步，老铁！",
+                        showCancel:false,
+                        success:function () {
+
+                        }
+                    })
                     that.getFriendList();
                     that.getUserInfo();
                 }else{
+                    wx.showModal({
+                        content:res.data.errmsg,
+                        showCancel:false,
+                        success:function () {
 
+                        }
+                    })
                 }
             }
         })

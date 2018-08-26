@@ -1,14 +1,27 @@
 {
   "pages":[
-    "pages/main/main",
+
+
     "pages/index/index",
+
+    "pages/exchange/exchange",
+    "pages/store/store",
+
+
+    "pages/main/main",
+
+
+
+
 
 
     "pages/moment/index",
 
+    "pages/rule/rule",
 
 
-    "pages/exchange/exchange",
+
+
 
     "pages/visit/visit",
 
@@ -25,7 +38,8 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"black",
-    "enablePullDownRefresh":false
+    "enablePullDownRefresh":false,
+    "navigationBarTitleText":"步数换墨镜"
   },
   "networkTimeout": {
   "request": 30000,

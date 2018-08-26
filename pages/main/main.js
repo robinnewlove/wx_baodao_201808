@@ -55,8 +55,8 @@ Page({
                     },
                     method:"GET",
                     success:function (res){
-                        console.log(res.data.openid);
-                        console.log(res.data.session_key);
+                        //console.log("获取openid"+res.data.openid);
+                        //console.log(res.data.session_key);
                         var sessionId = res.data.session_key;
                         that.setData({
                             sessionId: sessionId,
@@ -67,7 +67,7 @@ Page({
                         //获取微信步数代码
                         wx.getWeRunData({
                             success(res) {
-                                console.log(res);
+                                console.log(res.encryptedData);
                                 that.setData({
                                     encryptedData: res.encryptedData,
                                     iv:res.iv,
@@ -75,7 +75,27 @@ Page({
                                 });
                                 that.decodeUserInfo();
                             }
-                        })
+                        });
+                        wx.getSetting({
+                                success: function (res) {
+                                    //console.log(res.authSetting['scope.userInfo']);
+                                    if (res.authSetting['scope.userInfo']) {
+                                        // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                                        wx.getUserInfo({
+                                            success: function (res) {
+                                                console.log("获取用户信息成功");
+                                                console.log(res.userInfo)
+
+                                                that.setData({
+                                                    userInfo:res.userInfo,
+                                                    nickName:res.userInfo.nickName
+                                                });
+                                                that.postUserInfo();
+                                            }
+                                        })
+                                    }
+                                }
+                            });
 
                         //获取朋友
                         that.getFriendList();
@@ -86,7 +106,7 @@ Page({
                         //获取用户总步数
                         that.getUserInfo();
 
-                        that.postUserInfo();
+
 
                         that.getUserqrcode();
 
@@ -99,27 +119,6 @@ Page({
                 }
               }
         }),
-        wx.getSetting({
-                success: function (res) {
-                    //console.log(res.authSetting['scope.userInfo']);
-                    if (res.authSetting['scope.userInfo']) {
-                        // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                        wx.getUserInfo({
-                            success: function (res) {
-                                console.log("获取用户信息成功");
-                                console.log(res.userInfo)
-
-                                that.setData({
-                                    userInfo:res.userInfo,
-                                    nickName:res.userInfo.nickName
-                                });
-
-                                //console.log("that.data.avatar"+that.data.avatar)
-                            }
-                        })
-                    }
-                }
-            }),
         wx.getSystemInfo({
                 success: function (res) {
                     //console.log(res.windowWidth)
@@ -148,10 +147,11 @@ Page({
     },
     decodeUserInfo: function () {
         let that = this;
-
+        //console.log(that.data.encryptedData);
         wx.request({
-            url: 'https://werun.renlai.fun/wechat/decrypy',
+            url: 'https://werun.renlai.fun/wechat/wx/post_user_werun',
             data: {
+                openId:that.data.openId,
                 encryptedData: that.data.encryptedData,
                 iv: that.data.iv,
                 sessionKey: wx.getStorageSync('sessionId')
@@ -159,7 +159,9 @@ Page({
             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
             // header: {}, // 设置请求的 header
             success: function (res) {
-                console.log(res.data);
+
+                //console.log("三三三三三三三三三三三三三三三三三三三三三三三三")
+                //console.log(res.data.stepInfoList);
 
                 let todayStep = res.data.stepInfoList.pop();
                 that.setData({
@@ -244,14 +246,16 @@ Page({
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/get_help_werun',
             data: {
-                openid: that.data.openId
+                openId: that.data.openId
             },
             method: 'GET',
             success: function (res) {
-                console.log(res.data.data.userlist);
-                that.setData({
-                    friendlist: res.data.data.userlist
-                });
+                //console.log(res.data.data.userlist);
+                if(res.data.data != null){
+                    that.setData({
+                        friendlist: res.data.data.userlist
+                    })
+                }else{}
 
             }
         })
@@ -296,11 +300,13 @@ Page({
                 //console.log(res.data)
 
                 if(res.data.errcode == "0"){
-                    //console.log(res.data.data.step)
+                    console.log("===============================")
+                    console.log(res.data.data.avatarUrl)
                     that.setData({
                         step: res.data.data.step,
-                        //avatar: res.data.data.avatarUrl
+                        avatar: res.data.data.avatarUrl
                     });
+                    console.log(that.data.avatar)
 
                 }
                 else{
@@ -312,6 +318,7 @@ Page({
 
     postUserInfo:function () {
         let that = this;
+        console.log("=====================================")
         console.log(that.data.openId)
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/post_userinfo',
@@ -331,10 +338,10 @@ Page({
 
                 if(res.data.errcode == "0"){
                     //console.log(res.data.data.step)
-                    console.log("写入用户信息成功")
+                    //console.log("写入用户信息成功")
                 }
                 else{
-                    console.log("写入用户信息失败")
+                    //console.log("写入用户信息失败")
                 }
             }
         })
