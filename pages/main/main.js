@@ -22,8 +22,8 @@ Page({
         //画布相关字段
         canvasHeight:"0",
         canvasWidth:"0",
-        avatar:'https://werun.renlai.fun/static/images/sharepage-1.jpg',
-        bgImage: 'https://werun.renlai.fun/static/images/sharepage-1.jpg',
+        avatar:'',
+        bgImage: ['https://werun.renlai.fun/static/images/sharepage-1.jpg','https://werun.renlai.fun/static/images/sharepage-2.jpg','https://werun.renlai.fun/static/images/sharepage-3.jpg','https://werun.renlai.fun/static/images/sharepage-4.jpg','https://werun.renlai.fun/static/images/sharepage-5.jpg'],
         qurl:"",
         imgload:0,
         bgImagePath:"",
@@ -38,6 +38,7 @@ Page({
         nickNameLeft:"",
         qcodeTop:"",
         qcodeWidth:0,
+        isfriendlist:false
     },
     onLoad: function () {
 
@@ -253,9 +254,14 @@ Page({
                 //console.log(res.data.data.userlist);
                 if(res.data.data != null){
                     that.setData({
-                        friendlist: res.data.data.userlist
+                        friendlist: res.data.data.userlist,
+                        isfriendlist:false
                     })
-                }else{}
+                }else{
+                    that.setData({
+                        isfriendlist:true
+                    });
+                }
 
             }
         })
@@ -300,10 +306,16 @@ Page({
                 //console.log(res.data)
 
                 if(res.data.errcode == "0"){
-                    console.log("===============================")
-                    console.log(res.data.data.avatarUrl)
+                    // console.log("===============================")
+                    // console.log(res.data.data.avatarUrl)
+                    var _step
+                    if(res.data.data.step != 0){
+                        _step = res.data.data.step;
+                    }else{
+                        _step = that.data.allstep;
+                    }
                     that.setData({
-                        step: res.data.data.step,
+                        step: _step,
                         avatar: res.data.data.avatarUrl
                     });
                     console.log(that.data.avatar)
@@ -456,7 +468,7 @@ Page({
         //     })
         // } else {
             that.showLoading();
-            that.downloadAvatar();
+           that.downloadAvatar();
         //}
     },
 
@@ -483,38 +495,47 @@ Page({
     //下载资源
     downloadAvatar: function () {
         var that = this;
-        console.log('这里是重新开始')
         that.setData({
             imgload:0
         });
-        wx.downloadFile({
+        const downloadTask1 = wx.downloadFile({
             url: that.data.avatar,
             success: function (res) {
                 that.setData({
-                    avatarPath: res.tempFilePath,
-                    imgload:that.data.imgload+1
+                    avatarPath: res.tempFilePath
                 })
-                //console.log(that.data.imgload);
-                if(that.data.imgload == 3){
-                    //console.log('这里是第一个')
-                    console.log('执行画画1');
-                    that.drawImage();
-                }
             },
             fail: function () {
                 that.showErrorModel();
             }
         });
+
+
+        downloadTask1.onProgressUpdate((res) => {
+            console.log(res.progress)
+            if(res.progress == 100){
+                console.log('头像下载完成');
+                that.setData({
+                    imgload:that.data.imgload+1
+                })
+                if(that.data.imgload == 3){
+                    console.log('执行画画3');
+                    that.drawImage();
+                }
+            }
+        })
+
+        var bgImageitem = that.data.bgImage[Math.floor(Math.random()*that.data.bgImage.length)];
+
         wx.downloadFile({
-            url: that.data.bgImage,
+            url: bgImageitem,
             success: function (res) {
                 that.setData({
                     bgImagePath: res.tempFilePath,
                     imgload:that.data.imgload+1
                 })
-                //console.log(that.data.imgload);
+                console.log(that.data.imgload);
                 if(that.data.imgload == 3){
-                    //console.log('这里是第二个')
                     console.log('执行画画2');
                     that.drawImage();
                 }
@@ -530,7 +551,6 @@ Page({
                 that.setData({
                     qurlPath: res.tempFilePath,
                 })
-                //console.log(that.data.imgload);
             },
             fail: function () {
                 that.showErrorModel();
@@ -539,12 +559,13 @@ Page({
         downloadTask.onProgressUpdate((res) => {
             console.log(res.progress)
             if(res.progress == 100){
-
+                console.log('二维码下载完成');
                 that.setData({
                     imgload:that.data.imgload+1
                 })
                 if(that.data.imgload == 3){
                     console.log('执行画画3');
+                    console.log(that.data.qurlPath);
                     that.drawImage();
                 }
             }
@@ -587,7 +608,7 @@ Page({
         var avatarWidth = that.data.avatarWidth;//头像半径
 
 
-        ctx.drawImage(that.data.avatar,that.data.avatarLeft+avatarStrokeWidth,that.data.avatarTop+avatarStrokeWidth, avatarWidth, avatarWidth);
+        ctx.drawImage(that.data.avatarPath,that.data.avatarLeft+avatarStrokeWidth,that.data.avatarTop+avatarStrokeWidth, avatarWidth, avatarWidth);
         ctx.restore();
 
         //用户名

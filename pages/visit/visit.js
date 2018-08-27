@@ -17,6 +17,7 @@ Page({
         nickName:"",
         avatarUrl:"",
         useropenId:"",
+        isfriendlist:false,
         canIUse: wx.canIUse('button.open-type.getUserInfo')
     },
     onLoad: function (e) {
@@ -137,11 +138,18 @@ Page({
             },
             method: 'GET',
             success: function (res) {
-                that.setData({
-                    friendlist:res.data.data.userlist,
-                    allstep:res.data.data.total
-                });
-
+                console.log(res.data.data.userlist);
+                if(res.data.data != null){
+                    that.setData({
+                        friendlist:res.data.data.userlist,
+                        allstep:res.data.data.total,
+                        isfriendlist:false
+                    });
+                }else{
+                    that.setData({
+                        isfriendlist:true
+                    });
+                }
                 let totalItems = 100;
                 let rightItems = Math.round(that.data.allstep/100);
                 that.showScoreAnimation(rightItems, totalItems);
@@ -167,8 +175,8 @@ Page({
                     //console.log(res.data.data.step)
                     that.setData({
                         step: res.data.data.step,
-                        //nickName: res.data.data.name,
-                        //avatarUrl: res.data.data.avatarUrl
+                        nickName: res.data.data.name,
+                        avatarUrl: res.data.data.avatarUrl
                     });
                 }
                 else{

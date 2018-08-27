@@ -11,8 +11,12 @@
         <!--navigator url="/pages/visit/visit?openId={{openId}}" class="navigator-exchange"></navigator-->
     </view>
     <view class="userinfobox">
-        <view class="userheader"><open-data type="userAvatarUrl"></open-data></view>
-        <view class="userheadertxt">Hi,<open-data class="userinfo-nickname" type="userNickName"></open-data> !</view>
+        <!--view class="userheader"><open-data type="userAvatarUrl"></open-data></view-->
+        <!--view class="userheadertxt">Hi,<open-data class="userinfo-nickname" type="userNickName"></open-data> !</view-->
+
+        <view class="userheader"><image src="{{userInfo.avatarUrl}}"></image></view>
+        <view class="userheadertxt">Hi,<text>{{userInfo.nickName}}</text> !</view>
+
         <navigator url="/pages/rule/rule" class="navigator-guize">活动规则></navigator>
     </view>
     <view class="circleBar">
@@ -29,13 +33,13 @@
           <view class="userstep-name">{{item.name}}</view>
           <view class="userstep-num">为你助力{{item.step}}步</view>
         </view>
-        <view class="userstep-list-nodata" wx:if="{{friendlist}}">还没有好友为你助力，赶紧求助</view>
+        <view class="userstep-list-nodata" wx:if="{{isfriendlist}}">还没有好友为你助力，赶紧求助</view>
     </view>
     <view class="userOrderList">
         <view class="userOrderList-title">排行榜</view>
         <view class="userOrderListbody">
             <view wx:for="{{userOrderList}}" wx:key="name" class="userOrderList-col">
-                      <view class="jianbei_{{index}}"></view>
+                      <view class="jianbei jianbei_{{index}}">{{index+1}}</view>
                       <image src="{{item.avatar}}" class="userOrderList-header"></image>
                       <view class="userOrderList-name">{{item.name}}</view>
                       <view class="userOrderList-num">{{item.runNumber}}步</view>

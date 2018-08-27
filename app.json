@@ -36,10 +36,9 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "步数换墨镜",
     "navigationBarTextStyle":"black",
-    "enablePullDownRefresh":false,
-    "navigationBarTitleText":"步数换墨镜"
+    "enablePullDownRefresh":false
   },
   "networkTimeout": {
   "request": 30000,

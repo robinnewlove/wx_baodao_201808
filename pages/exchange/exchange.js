@@ -50,12 +50,13 @@ Page({
 
     //获取条形码  需要传openid  券类型
     getQcode:function (opt) {
+        console.log(opt.currentTarget.dataset.qtype)
         let that = this;
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/get_17qrcode',
             data: {
                 openId: that.data.openId,
-                qType:opt.currentTarget.dataset
+                qType:opt.currentTarget.dataset.qtype
             },
             method: 'GET',
             success: function (res) {
@@ -66,7 +67,7 @@ Page({
                         tipshow:true
                     });
                 }else{
-                   console.log("get_17qrcode接口异常")
+                   console.log(res.data.errmsg)
                 }
             }
         })
@@ -79,6 +80,7 @@ Page({
             content:"是否兑换"+opt.currentTarget.dataset.qtypename+"元New Balance抵扣券",
             success:function (res) {
                 if (res.confirm) {
+                    console.log(opt.currentTarget.dataset.qtype);
                     wx.request({
                         url: 'https://werun.renlai.fun/wechat/wx/post_user_coupon',
                         data: {

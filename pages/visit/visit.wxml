@@ -24,9 +24,9 @@
             <view wx:for="{{friendlist}}" wx:key="username" class="userstep-col">
               <image src="{{item.avatarUrl}}" class="userstep-header"></image>
               <view class="userstep-name">{{item.name}}</view>
-              <view class="userstep-num">为你助力{{item.step}}步</view>
+              <view class="userstep-num">助力{{item.step}}步</view>
             </view>
-            <view class="userstep-list-nodata" wx:if="{{friendlist}}">还没有好友为你助力，赶紧求助</view>
+            <view class="userstep-list-nodata" wx:if="{{isfriendlist}}">还没有好友为你助力，赶紧求助</view>
     </view>
 
     <view class="btn-box">

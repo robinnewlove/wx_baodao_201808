@@ -5,12 +5,12 @@
     </view>
     <view class="voucherbox">
         <rich-text class="voucher-1" bindtap="showCoupontip" data-qtype="coupon30">
-            <button wx:if="{{coupon30 == 0}}" class="btn-3" catchtap="getCoupon" data-qtype="coupon30" data-qtypename="30"></button>
-            <button wx:if="{{coupon30 == 1}}" class="btn-4" catchtap="getQcode" data-qtype="coupon30"></button>
+            <button wx:if="{{coupon30 != 2}}" class="btn-3" catchtap="getCoupon" data-qtype="coupon30" data-qtypename="30"></button>
+            <button wx:if="{{coupon30 == 2}}" class="btn-4" catchtap="getQcode" data-qtype="coupon30"></button>
         </rich-text>
         <rich-text class="voucher-2" bindtap="showCoupontip" data-qtype="coupon100">
-            <button wx:if="{{coupon100 == 0}}" class="btn-3" catchtap="getCoupon" data-qtype="coupon100" data-qtypename="100"></button>
-            <button wx:if="{{coupon100 == 1}}" class="btn-4" catchtap="getQcode" data-qtype="coupon100"></button>
+            <button wx:if="{{coupon100 != 2}}" class="btn-3" catchtap="getCoupon" data-qtype="coupon100" data-qtypename="100"></button>
+            <button wx:if="{{coupon100 == 2}}" class="btn-4" catchtap="getQcode" data-qtype="coupon100"></button>
         </rich-text>
         <rich-text class="voucher-3" bindtap="showCoupontip" data-qtype="coupon780">
             <button wx:if="{{coupon780 == 0}}" class="btn-5" catchtap="postKill"></button>

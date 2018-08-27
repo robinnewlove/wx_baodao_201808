@@ -9,6 +9,7 @@ page{
 
 .userinfobox{padding:38rpx 30rpx 0 38rpx;overflow: hidden;background: #fff;}
 .userheader{width:56rpx; height: 56rpx;border-radius:56rpx; float: left; overflow: hidden; margin-right: 20rpx;}
+.userheader image{width:56rpx; height: 56rpx;}
 .userheadertxt{float: left; height: 56rpx; line-height: 56rpx;font-size: 44rpx;color:#666;}
 
 .navigator-guize{float: right; height: 56rpx; line-height: 56rpx;color:#1c1c1c;font-size: 26rpx;}
@@ -79,6 +80,8 @@ page{
 
 .canvasbox{width: 0px; height: 0px;overflow: hidden}
 
-.jianbei_0{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-1.png'); background-size: 100% auto;left:30rpx;top:10rpx;}
-.jianbei_1{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-2.png'); background-size: 100% auto;left:30rpx;top:10rpx;}
+.jianbei{width: 32rpx; height: 41rpx;position: absolute;background-size: 100% auto;left:30rpx;top:10rpx;font-size: 24rpx;color: #999999;}
+.jianbei_0{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-1.png'); background-size: 100% auto;left:30rpx;top:10rpx;text-indent: -9999rpx}
+.jianbei_1{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-2.png'); background-size: 100% auto;left:30rpx;top:10rpx;text-indent: -9999rpx}
+.jianbei_2{width: 32rpx; height: 41rpx;position: absolute;background: url('https://werun.renlai.fun/static/images/jp-3.png'); background-size: 100% auto;left:30rpx;top:10rpx;text-indent: -9999rpx}
 
