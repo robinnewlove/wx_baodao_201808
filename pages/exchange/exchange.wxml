@@ -13,8 +13,8 @@
             <button wx:if="{{coupon100 == 2}}" class="btn-4" catchtap="getQcode" data-qtype="coupon100"></button>
         </rich-text>
         <rich-text class="voucher-3" bindtap="showCoupontip" data-qtype="coupon780">
-            <button wx:if="{{coupon780 == 0}}" class="btn-5" catchtap="postKill"></button>
-             <button wx:if="{{coupon780 == 1}}" class="btn-6" catchtap="openPrizeinfo"></button>
+            <button wx:if="{{coupon780 != 2}}" class="btn-5" catchtap="postKill"></button>
+             <button wx:if="{{coupon780 == 2}}" class="btn-6" catchtap="openPrizeinfo"></button>
         </rich-text>
     </view>
     <view class="product-view-1">

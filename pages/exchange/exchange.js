@@ -123,7 +123,8 @@ Page({
             method: 'POST',
             success: function (res) {
                 if(res.data.errcode == 0){
-                    that.getCardlist();
+
+                    that.openPrizeinfo();
                 }else{
                     //console.log(res.data.errmsg)
                     wx.showModal({

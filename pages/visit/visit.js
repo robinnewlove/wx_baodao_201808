@@ -138,7 +138,7 @@ Page({
             },
             method: 'GET',
             success: function (res) {
-                console.log(res.data.data.userlist);
+                console.log(res.data.data);
                 if(res.data.data != null){
                     that.setData({
                         friendlist:res.data.data.userlist,

@@ -6,7 +6,7 @@ button::after{
   border: none;
 }
 
-.top-menu{overflow: hidden;background:url('https://www.zhenzhezixun.com/images/top-menu-bg.jpg'); background-size:24rpx 96rpx;
+.top-menu{overflow: hidden;background:url('https://werun.renlai.fun/static/images/top-menu-bg.jpg'); background-size:24rpx 96rpx;
 }
 
 .top-menu navigator{width: 50%;font-size:24rpx; color: #878787; box-sizing: border-box; height: 95rpx; line-height: 95rpx;}
