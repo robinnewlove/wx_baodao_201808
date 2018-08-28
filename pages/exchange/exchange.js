@@ -3,14 +3,17 @@ Page({
         openId:null,
         coupon30:0,
         coupon100:0,
-        coupon780:0,
+        coupon780:2,
         qcodeImg:null,
         qcode:null,
         tipshow:false,
         postPrizeinfo:false,
         coupontip30:false,
         coupontip100:false,
-        coupontip780:false
+        coupontip780:false,
+        fullName:"",
+        telePhone:"",
+        address:""
     },
     onLoad: function (e) {
         let that = this;
@@ -38,7 +41,7 @@ Page({
                     that.setData({
                         coupon30: res.data.data.coupon30,
                         coupon100: res.data.data.coupon100,
-                        coupon780: res.data.data.coupon780
+                        //coupon780: res.data.data.coupon780
                     });
                 }else{
                     console.log("get_user_coupon接口异常")
@@ -140,6 +143,34 @@ Page({
         that.setData({
             postPrizeinfo:true
         });
+        wx.request({
+            url: 'https://werun.renlai.fun/wechat/wx/get_lottery_is_userinfo',
+            data: {
+                //openId: that.data.openId
+                openId:"ongkJ0fIMtsJhLQevL6vYZHMy41k"
+            },
+            method: 'GET',
+            success: function (res) {
+                if(res.data.errcode == 0){
+                      if(res.data.lottery == 1){
+
+                          that.setData({
+                              fullName:res.data.data.fullName,
+                              telePhone:res.data.data.telePhone,
+                              address:res.data.data.address,
+                              postPrizeinfo:true
+                          });
+
+                      }
+                    that.openPrizeinfo();
+                }else{
+                    //console.log(res.data.errmsg)
+                    wx.showModal({
+                        content: res.data.errmsg
+                    });
+                }
+            }
+        })
     },
 
 

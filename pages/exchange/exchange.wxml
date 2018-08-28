@@ -41,15 +41,15 @@
                         <form bindsubmit="formSubmit">
                             <view class="section">
                                 <view class="section__title">联系人:</view>
-                                <input name="fullName" placeholder="姓名" />
+                                <input name="fullName" placeholder="姓名" value="{{fullName}}" />
                             </view>
                             <view class="section">
                                 <view class="section__title">联系方式:</view>
-                                <input name="telePhone" placeholder="手机号" />
+                                <input name="telePhone" placeholder="手机号"  value="{{telePhone}}" />
                             </view>
                             <view class="section">
                                 <view class="section__title">邮寄地址:</view>
-                                <input name="address" placeholder="请填写收货地址" />
+                                <input name="address" placeholder="请填写收货地址"  value="{{address}}" />
                             </view>
                             <view class="tipbox-txt">*请认真填写信息，一旦提交不可修改</view>
                             <view class="btn-area">
