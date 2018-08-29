@@ -3,7 +3,7 @@ Page({
         openId:null,
         coupon30:0,
         coupon100:0,
-        coupon780:2,
+        coupon780:0,
         qcodeImg:null,
         qcode:null,
         tipshow:false,
@@ -13,7 +13,9 @@ Page({
         coupontip780:false,
         fullName:"",
         telePhone:"",
-        address:""
+        address:"",
+        submitbtn:true
+
     },
     onLoad: function (e) {
         let that = this;
@@ -41,7 +43,7 @@ Page({
                     that.setData({
                         coupon30: res.data.data.coupon30,
                         coupon100: res.data.data.coupon100,
-                        //coupon780: res.data.data.coupon780
+                        coupon780: res.data.data.coupon780
                     });
                 }else{
                     console.log("get_user_coupon接口异常")
@@ -94,12 +96,14 @@ Page({
                         success: function (res) {
                             if(res.data.errcode == 0){
                                 wx.showModal({
+                                    showCancel:false,
                                     content: "恭喜你成功抢到"+opt.currentTarget.dataset.qtypename+"元New Balance抵扣券，赶快去门店使用吧"
                                 });
                                 that.getCardlist();
                             }else{
                                 //console.log("post_user_coupon接口异常")
                                 wx.showModal({
+                                    showCancel:false,
                                     content: res.data.errmsg
                                 });
                             }
@@ -128,9 +132,11 @@ Page({
                 if(res.data.errcode == 0){
 
                     that.openPrizeinfo();
+                    that.getCardlist();
                 }else{
                     //console.log(res.data.errmsg)
                     wx.showModal({
+                        showCancel:false,
                         content: res.data.errmsg
                     });
                 }
@@ -140,32 +146,37 @@ Page({
 
     openPrizeinfo:function () {
         let that = this;
-        that.setData({
-            postPrizeinfo:true
-        });
+        // that.setData({
+        //     postPrizeinfo:true
+        // });
+        console.log("这里是查看事件：")
         wx.request({
             url: 'https://werun.renlai.fun/wechat/wx/get_lottery_is_userinfo',
             data: {
-                //openId: that.data.openId
-                openId:"ongkJ0fIMtsJhLQevL6vYZHMy41k"
+                openId: that.data.openId
+                //openId:"ongkJ0fIMtsJhLQevL6vYZHMy41k"
             },
             method: 'GET',
             success: function (res) {
+                console.log("11111111"+res.data.errcode)
                 if(res.data.errcode == 0){
-                      if(res.data.lottery == 1){
-
+                      if(res.data.data.lottery == 1){
                           that.setData({
                               fullName:res.data.data.fullName,
                               telePhone:res.data.data.telePhone,
                               address:res.data.data.address,
-                              postPrizeinfo:true
+                              submitbtn:false
                           });
 
                       }
-                    that.openPrizeinfo();
+                      that.setData({
+                          postPrizeinfo:true
+                      });
+                    //sssthat.openPrizeinfo();
                 }else{
                     //console.log(res.data.errmsg)
                     wx.showModal({
+                        showCancel:false,
                         content: res.data.errmsg
                     });
                 }
@@ -213,7 +224,7 @@ Page({
             success: function (res) {
                 if(res.data.errcode == 0){
                     wx.showModal({
-                        content:"post_lottery_userinfo接口异常",
+                        content:"提交成功",
                         showCancel:false,
                         success:function () {
                             that.setData({
@@ -222,7 +233,10 @@ Page({
                         }
                     })
                 }else{
-                    console.log("post_lottery_userinfo接口异常")
+                    wx.showModal({
+                        content:res.data.errmsg,
+                        showCancel:false
+                    })
                 }
             }
         })

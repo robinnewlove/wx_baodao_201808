@@ -13,9 +13,12 @@
             <button wx:if="{{coupon100 == 2}}" class="btn-4" catchtap="getQcode" data-qtype="coupon100"></button>
         </rich-text>
         <rich-text class="voucher-3" bindtap="showCoupontip" data-qtype="coupon780">
-            <button wx:if="{{coupon780 != 2}}" class="btn-5" catchtap="postKill"></button>
-             <button wx:if="{{coupon780 == 2}}" class="btn-6" catchtap="openPrizeinfo"></button>
-        </rich-text>
+                                                    <button wx:if="{{coupon780 != 2}}" class="btn-5" catchtap="postKill"></button>
+                                                     <button wx:if="{{coupon780 == 2}}" class="btn-6" catchtap="openPrizeinfo"></button>
+                                                </rich-text>
+
+
+
     </view>
     <view class="product-view-1">
         <image src="https://werun.renlai.fun/static/images/product-1.jpg" mode="widthFix"></image>
@@ -45,7 +48,7 @@
                             </view>
                             <view class="section">
                                 <view class="section__title">联系方式:</view>
-                                <input name="telePhone" placeholder="手机号"  value="{{telePhone}}" />
+                                <input name="telePhone" placeholder="手机号" maxlength="11"  value="{{telePhone}}" type="number" />
                             </view>
                             <view class="section">
                                 <view class="section__title">邮寄地址:</view>
@@ -53,8 +56,8 @@
                             </view>
                             <view class="tipbox-txt">*请认真填写信息，一旦提交不可修改</view>
                             <view class="btn-area">
-                                <button formType="submit"></button>
-                              </view>
+                                <button formType="submit" wx:if="{{submitbtn}}"></button>
+                            </view>
                         </form>
                     </view>
                 </view>
@@ -80,7 +83,7 @@
                         <view class="tipbox-coupontip">
                             <view class="tipbox-coupontip-title">二等奖100元现金抵扣券使用须知:</view>
                             <view>1. 抵扣券门店使用有效期：2018年8月31日-9月25日</view>
-                            <view>2.抵用券仅限指定宝岛眼镜门店购买New Balance品牌光学框使用，可抵扣100元现金，每人每次仅限使用一张，不叠加，不找零，不兑现，可与门店其他优惠同享，若在有效期内未去门店使用，抵扣券过期作废；</view>
+                            <view>2.抵用券仅限指定宝岛眼镜门店购买New Balance品牌光学框使用，可抵扣100元现金，每人每次仅限使用一张，不叠加，不找零，不兑现，可与门店其他优惠同享（除使用O2O券购买New Balance光学框不可与该活动抵扣券同享），若在有效期内未去门店使用，抵扣券过期作废；</view>
                             <view>3.由于宝岛活动门店较多，每家门店产品备货情况不统一，具体可挑选商品以门店陈列为准，活动产品数量有限，请尽早前往门店选购。</view>
                             <view>4.商品实际售价以门店镜架吊牌价为准，产品售出后若存在质量问题，门店根据售后服务条款进行处理。</view>
                             <view>5.若产生退货行为，只退还交易中实际支付的金额，抵扣的金额及抵扣券不退回；</view>
@@ -99,7 +102,7 @@
                                           <view class="tipbox-coupontip">
                                                <view class="tipbox-coupontip-title">三等奖30元现金抵扣券使用须知:</view>
 <view>1. 抵扣券门店使用有效期：2018年8月31日-9月25日</view>
-<view>2.抵扣券仅限指定宝岛眼镜门店购买New Balance品牌光学框使用，可抵扣30元现金，每人每次仅限使用一张，不叠加，不找零，不兑现，可与门店其他优惠同享，若在有效期内未去门店使用，抵扣券过期作废；</view>
+<view>2.抵扣券仅限指定宝岛眼镜门店购买New Balance品牌光学框使用，可抵扣30元现金，每人每次仅限使用一张，不叠加，不找零，不兑现，可与门店其他优惠同享（除使用O2O券购买New Balance光学框不可与该活动抵扣券同享），若在有效期内未去门店使用，抵扣券过期作废；</view>
 <view>3.由于宝岛活动门店较多，每家门店产品备货情况不统一，具体可挑选商品以门店陈列为准，活动产品数量有限，请尽早前往门店选购。</view>
 <view>4.商品实际售价以门店镜架吊牌价为准，产品售出后若存在质量问题，门店根据售后服务条款进行处理。</view>
 <view>5.若产生退货行为，只退还交易中实际支付的金额，抵扣的金额及抵扣券不退回；</view>

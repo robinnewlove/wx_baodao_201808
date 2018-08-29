@@ -52,7 +52,7 @@ button::after{
 
 
 .btn-area{width: 500rpx;margin: auto; border-top: 1px solid #f2f2f2;padding-top: 44rpx;}
-.btn-area button{width:194rpx;height: 68rpx;background-size: 100% 100%;background-image:url('https://werun.renlai.fun/static/images/btn-7.png')}
+.btn-area button{width:194rpx;height: 68rpx;background-size: 100% 100%;background-image:url('https://werun.renlai.fun/static/images/btn-7.png');padding: 0px;background-color:#FFFFFF;}
 
 .tipbox-close{position: absolute; top:20rpx; right: 20rpx;width: 34rpx; height: 34rpx;background: url('https://werun.renlai.fun/static/images/tipclose.png'); background-size: 100% 100%;padding: 0px;}
 
